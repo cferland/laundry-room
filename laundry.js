@@ -16,22 +16,23 @@ server.listen(port, hostname, () => {
 var StatsD = require('node-dogstatsd').StatsD;
 var dogstatsd = new StatsD();
 
-let timer;
+let inUse = 0;
 
 function endCycle(machineId) {
-  dogstatsd.decrement('machines-in-use');
-  dogstatsd.set(`${machineId}.in-use`, 0);
+  inUse -= 1;
+  dogstatsd.set('machines-in-use', inUse);
   console.log(`Cycle ${machineId} ended.`);
 }
 
 function startCycle(machineId) {
-  dogstatsd.increment('machines-in-use');
-  dogstatsd.set(`${machineId}.in-use`, 1);
+  inUse += 1;
+  dogstatsd.set('machines-in-use', inUse);
   console.log(`Cycle ${machineId} started.`);
   setTimeout(endCycle, 1800000, machineId);
 }
 
 startCycle(1);
+startCycle(2);
 
 
 
