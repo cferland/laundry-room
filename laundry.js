@@ -21,16 +21,17 @@ let timer;
 function endCycle(machineId) {
   dogstatsd.decrement('machines-in-use');
   dogstatsd.set(`${machineId}.in-use`, 0);
-  console.log(`Cycle ${machineId} ended.`)
-  clearTimeout(timer);
+  console.log(`Cycle ${machineId} ended.`);
 }
 
 function startCycle(machineId) {
   dogstatsd.increment('machines-in-use');
   dogstatsd.set(`${machineId}.in-use`, 1);
   console.log(`Cycle ${machineId} started.`);
-  timer = setTimeout(endCycle(machineId), 1800000);
+  setTimeout(endCycle, 1800000, machineId);
 }
+
+startCycle(1);
 
 
 
