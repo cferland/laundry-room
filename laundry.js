@@ -44,6 +44,9 @@ startCycle(washer1);
 startCycle(washer2);
 setTimeout(startCycle, 20000, dryer1);
 setTimeout(startCycle, 30000, dryer2);
+setInterval(startCycle, 180000, washer1);
+setInterval(startCycle, 200000, washer2);
+setInterval(startCycle, 300000, dryer1);
 
 
 
