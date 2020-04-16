@@ -25,14 +25,16 @@ function endCycle(machineId) {
   machineId = false;
   running -= 1;
   console.log(`Cycle running is ${machineId}.`);
-  dogstatsd.set('machines-in-use', running);
+  console.log(running);
+  dogstatsd.gauge('machines-in-use', running);
 }
 
 function startCycle(machineId) {
   machineId = true;
   running += 1;
   console.log(`Cycle running is ${machineId}.`);
-  dogstatsd.set('machines-in-use', running);
+  console.log(running);
+  dogstatsd.gauge('machines-in-use', running);
   setTimeout(endCycle, 18000, machineId);
 }
 
