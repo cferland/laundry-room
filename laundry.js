@@ -16,27 +16,27 @@ server.listen(port, hostname, () => {
 var StatsD = require('node-dogstatsd').StatsD;
 var dogstatsd = new StatsD();
 
-let washer1 = false;
-let washer2 = false;
-let dryer1 = false;
-let dryer2 = false;
+let washer1 = 'Washer_1';
+let washer2 = 'Washer_2';
+let dryer1 = 'Dryer_1';
+let dryer2 = 'Dryer_2';
 
 let running = 0;
 
 function endCycle(machineId) {
-  machineId = false;
   running -= 1;
-  console.log(`Cycle running is ${machineId}.`);
+  console.log(`Cycle finished on ${machineId}.`);
   console.log(running);
   dogstatsd.gauge('machines-in-use', running);
+  dogstatsd.gauge(`${machineId}`, 0);
 }
 
 function startCycle(machineId) {
-  machineId = true;
   running += 1;
-  console.log(`Cycle running is ${machineId}.`);
+  console.log(`Cycle started on ${machineId}.`);
   console.log(running);
   dogstatsd.gauge('machines-in-use', running);
+  dogstatsd.gauge(`${machineId}`, 1);
   setTimeout(endCycle, 18000, machineId);
 }
 
