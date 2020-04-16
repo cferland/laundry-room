@@ -17,12 +17,12 @@ var StatsD = require('node-dogstatsd').StatsD;
 var dogstatsd = new StatsD();
 
 function endCycle(machineId) {
-  dogstatsd.decrement('machines-in-use');
+  dogstatsd.decrement('machines-in-use', 1);
   console.log(`Cycle ${machineId} ended.`);
 }
 
 function startCycle(machineId) {
-  dogstatsd.increment('machines-in-use');
+  dogstatsd.increment('machines-in-use', 1);
   console.log(`Cycle ${machineId} started.`);
   setTimeout(endCycle, 1800000, machineId);
 }
