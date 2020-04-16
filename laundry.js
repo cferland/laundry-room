@@ -16,8 +16,10 @@ server.listen(port, hostname, () => {
 var StatsD = require('node-dogstatsd').StatsD;
 var dogstatsd = new StatsD();
 
-let machine1 = false;
-let machine2 = false;
+let washer1 = false;
+let washer2 = false;
+let dryer1 = false;
+let dryer2 = false;
 
 let running = 0;
 
@@ -38,8 +40,10 @@ function startCycle(machineId) {
   setTimeout(endCycle, 18000, machineId);
 }
 
-startCycle(machine1);
-startCycle(machine2);
+startCycle(washer1);
+startCycle(washer2);
+setTimeout(startCycle, 20000, dryer1);
+setTimeout(startCycle, 30000, dryer2);
 
 
 
