@@ -1,3 +1,9 @@
+const tracer = require('dd-trace').init()
+
+tracer.init({
+  analytics: true
+})
+
 const http = require('http');
 
 const hostname = '127.0.0.1';
@@ -13,11 +19,7 @@ server.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
 
-const tracer = require('dd-trace').init()
 
-tracer.init({
-  analytics: true
-})
 
 var StatsD = require('node-dogstatsd').StatsD;
 var dogstatsd = new StatsD();
